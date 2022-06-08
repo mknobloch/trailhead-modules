@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Access to create survey and read and edit access to contacts</description>
+    <hasActivationRequired>true</hasActivationRequired>
+    <label>Contacts Survey</label>
+    <permissionSets>Access_to_Contacts</permissionSets>
+    <permissionSets>Create_Surveys</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>
