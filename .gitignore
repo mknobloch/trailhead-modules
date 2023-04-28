@@ -6,6 +6,7 @@
 .vscode/
 
 # Salesforce cache
+.sf/
 .sfdx/
 .localdevserver/
 
