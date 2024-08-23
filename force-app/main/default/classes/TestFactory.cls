@@ -18,6 +18,16 @@ public class TestFactory {
 		}
 		return contact;
 	}
+	public static Contact getContact(Id accountId, String firstName, String lastName, String title, Boolean doInsert){
+		Contact contact = getContact(accountId, firstName, lastName, false);
+		contact.Title = title;
+		if (doInsert) {
+			insert contact;
+		}
+
+		return contact;
+	}
+
 	public static void generateAccountWithContacts(Integer numContacts) {
 		Account account = getAccount('default account ltd', true);
 		List<Contact> contacts = new List<Contact>();
