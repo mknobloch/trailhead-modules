@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiFunction xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Retrieve Contact record based on an email address.</description>
+    <developerName>Lookup_Contact_by_Email</developerName>
+    <invocationTarget>Lookup_Contact_by_Email</invocationTarget>
+    <invocationTargetType>flow</invocationTargetType>
+    <isConfirmationRequired>false</isConfirmationRequired>
+    <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+    <masterLabel>Lookup Contact by Email</masterLabel>
+</GenAiFunction>

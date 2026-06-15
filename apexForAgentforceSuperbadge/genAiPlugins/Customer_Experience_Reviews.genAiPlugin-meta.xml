@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPlugin xmlns="http://soap.sforce.com/2006/04/metadata">
+    <canEscalate>false</canEscalate>
+    <description>This subagent handles guest reviews about their experience at Coral Cloud Resorts. It identifies the specific experience, processes customer feedback, and records their review in the Coral Cloud Resorts org.</description>
+    <developerName>Customer_Experience_Reviews</developerName>
+    <genAiFunctions>
+        <functionName>Lookup_Contact_by_Email</functionName>
+    </genAiFunctions>
+    <genAiFunctions>
+        <functionName>Get_Most_Recent_Booking_by_Contact</functionName>
+    </genAiFunctions>
+    <genAiFunctions>
+        <functionName>Lookup_Experience</functionName>
+    </genAiFunctions>
+    <genAiPluginInstructions>
+        <description>Always begin by checking that the Email__c field on the MessagingSession record is available with the session. If the Email__c field is available, then use this value to get the Contact record. If the Email__c field value is not known, always ask the customer for their email address and get their Contact record before creating the Guest Reviews record from the customer.</description>
+        <developerName>check_email_field</developerName>
+        <language>en_US</language>
+        <masterLabel>check_email_field</masterLabel>
+        <sortOrder>1</sortOrder>
+    </genAiPluginInstructions>
+    <genAiPluginInstructions>
+        <description>Get the Contact record by using the Lookup Contact by Email action. Then get the most recent Booking information by using the Get Most Recent Booking by Contact action.</description>
+        <developerName>get_contact_and_booking</developerName>
+        <language>en_US</language>
+        <masterLabel>get_contact_and_booking</masterLabel>
+        <sortOrder>2</sortOrder>
+    </genAiPluginInstructions>
+    <genAiPluginInstructions>
+        <description>There's an Experience Name field in the Booking record retrieved from the Get Most Recent Booking by Contact action. Confirm with the customer that the review they want to submit is for the experience related to this booking.</description>
+        <developerName>confirm_experience</developerName>
+        <language>en_US</language>
+        <masterLabel>confirm_experience</masterLabel>
+        <sortOrder>3</sortOrder>
+    </genAiPluginInstructions>
+    <genAiPluginInstructions>
+        <description>If the experience name is not what the customer intends to provide a review for, ask the user for their experience name. Check that the Booking record with this experience name exists for the customer, then confirm the experience name with the customer.</description>
+        <developerName>handle_different_experience</developerName>
+        <language>en_US</language>
+        <masterLabel>handle_different_experience</masterLabel>
+        <sortOrder>4</sortOrder>
+    </genAiPluginInstructions>
+    <genAiPluginInstructions>
+        <description>Use the Experience Name field on the Booking record to call the Lookup Experience action to get the Experience__c record.</description>
+        <developerName>lookup_experience_record</developerName>
+        <language>en_US</language>
+        <masterLabel>lookup_experience_record</masterLabel>
+        <sortOrder>5</sortOrder>
+    </genAiPluginInstructions>
+    <genAiPluginInstructions>
+        <description>Prompt the user to provide their review and a numeric rating on a scale of 1-10, with 10 being the most favorable rating. If the user submits a decimal rating, round it to the nearest whole number. Once both the review and the rating are received, invoke the Process_Guest_Reviews action with the collected details.</description>
+        <developerName>collect_review_and_rating</developerName>
+        <language>en_US</language>
+        <masterLabel>collect_review_and_rating</masterLabel>
+        <sortOrder>6</sortOrder>
+    </genAiPluginInstructions>
+    <language>en_US</language>
+    <masterLabel>Customer Experience Reviews</masterLabel>
+    <pluginType>Topic</pluginType>
+    <scope>Your sole job is to gather and process guest reviews about their experiences at Coral Cloud Resorts to ensure feedback is accurately recorded and categorized.</scope>
+</GenAiPlugin>

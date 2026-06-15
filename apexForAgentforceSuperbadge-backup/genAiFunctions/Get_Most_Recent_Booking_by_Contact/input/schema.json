@@ -1,0 +1,17 @@
+{
+  "required" : [ "contact" ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "contact" : {
+      "title" : "contact",
+      "description" : "Contact record variable",
+      "lightning:type" : "lightning__recordInfoType",
+      "lightning:sObjectInfo" : {
+        "apiName" : "Contact"
+      },
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}
