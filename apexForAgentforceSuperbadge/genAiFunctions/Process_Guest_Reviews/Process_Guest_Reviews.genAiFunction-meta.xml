@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiFunction xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Processes guest experience reviews by creating a Guest Review record from chat input</description>
+    <developerName>Process_Guest_Reviews</developerName>
+    <invocationTarget>GuestReviewProcessor</invocationTarget>
+    <invocationTargetType>apex</invocationTargetType>
+    <isConfirmationRequired>false</isConfirmationRequired>
+    <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+    <masterLabel>Process Guest Reviews</masterLabel>
+</GenAiFunction>

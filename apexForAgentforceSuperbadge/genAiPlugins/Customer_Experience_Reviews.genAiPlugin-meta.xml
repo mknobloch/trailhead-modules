@@ -12,6 +12,9 @@
     <genAiFunctions>
         <functionName>Lookup_Experience</functionName>
     </genAiFunctions>
+    <genAiFunctions>
+        <functionName>Process_Guest_Reviews</functionName>
+    </genAiFunctions>
     <genAiPluginInstructions>
         <description>Always begin by checking that the Email__c field on the MessagingSession record is available with the session. If the Email__c field is available, then use this value to get the Contact record. If the Email__c field value is not known, always ask the customer for their email address and get their Contact record before creating the Guest Reviews record from the customer.</description>
         <developerName>check_email_field</developerName>
