@@ -1,11 +1,11 @@
 {
   "packageDirectories": [
     {
-      "path": "force-app",
+      "path": "legacyModules",
       "default": true
     }
   ],
   "namespace": "",
   "sfdcLoginUrl": "https://login.salesforce.com",
-  "sourceApiVersion": "63.0"
+  "sourceApiVersion": "66.0"
 }

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>63.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <description>Set record variable for the most recent booking for a Contact.</description>
+        <name>Set_Booking_Record_Var</name>
+        <label>Set Booking Record Var</label>
+        <locationX>176</locationX>
+        <locationY>242</locationY>
+        <assignmentItems>
+            <assignToReference>recordVarBooking</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Most_Recent_Booking</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <description>This flow gets the most recent Booking for a Contact based on the Date of the booking.</description>
+    <environments>Default</environments>
+    <interviewLabel>Get Most Recent Booking for a Contact {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Get Most Recent Booking by Contact</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>Retrieve the latest booking record for the contact</description>
+        <name>Get_Most_Recent_Booking</name>
+        <label>Get Most Recent Booking</label>
+        <locationX>176</locationX>
+        <locationY>134</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Set_Booking_Record_Var</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Contact__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>contact.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Date__c</field>
+            <operator>LessThanOrEqualTo</operator>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Booking__c</object>
+        <sortField>Date__c</sortField>
+        <sortOrder>Desc</sortOrder>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Most_Recent_Booking</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <description>Contact record variable</description>
+        <name>contact</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Contact</objectType>
+    </variables>
+    <variables>
+        <description>This is the most recent Booking record for a contact.</description>
+        <name>recordVarBooking</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <objectType>Booking__c</objectType>
+    </variables>
+</Flow>

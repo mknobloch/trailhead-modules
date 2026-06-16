@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPromptTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <activeVersionIdentifier>EfQet+rMh4M/cbCsWAdqBYJYKyCLfvL0aoDxRszix2k=_1</activeVersionIdentifier>
+    <description>This template is used to generate JSON format of rating for Accuracy, Value and Communication based on the guest reviews captured for a resort experience</description>
+    <developerName>Experience_Guest_Reviews_Evaluator</developerName>
+    <masterLabel>Experience Guest Reviews Evaluator</masterLabel>
+    <overridable>false</overridable>
+    <templateVersions>
+        <content>You are summarizing guest reviews for a resort experience at {!$Organization.Name} to apply additional rating dimensions for guest reviews, specifically these three attributes:
+Accuracy (How accurately was the experience described in resort documentation)
+Value (How valuable was the experience compared to/in regards to the amount of money paid/spent)
+Communication (How well did resort personnel communicate with the guest before and during the experience)
+
+Assign a numeric value between 1 and 10 for each attribute; 1 is lowest rating, or least desirable, and 10 is highest, or most desirable/positive/favorable rating.
+
+Analyze existing guest reviews in{!$RelatedList:experience.Guest_Reviews__r.Records} about Experience Name: {!$Input:experience.Name}, and provide numeric ratings for the three additional attributes. 
+
+You must strictly generate a numeric rating for each attribute, (Accuracy, Value, Communication). 
+
+The data may not be available in every guest review. You must strictly only generate a value for an attribute (Accuracy, Value, Communication) if the review provides sufficient data to determine a rating for that specific attribute.
+
+List the values as response in valid JSON.
+Example of the expected JSON Output:
+{
+&quot;Accuracy&quot; : 8.2,
+&quot;Value&quot;: 7.6,
+&quot;Communication&quot;: 8
+}
+
+</content>
+        <inputs>
+            <apiName>experience</apiName>
+            <definition>SOBJECT://Experience__c</definition>
+            <masterLabel>experience</masterLabel>
+            <referenceName>Input:experience</referenceName>
+            <required>true</required>
+        </inputs>
+        <isCitationEnabled>false</isCitationEnabled>
+        <primaryModel>sfdc_ai__DefaultOpenAIGPT4OmniMini</primaryModel>
+        <status>Published</status>
+        <templateDataProviders>
+            <definition>invocable://getRelatedList</definition>
+            <parameters>
+                <definition>primitive://String</definition>
+                <isRequired>true</isRequired>
+                <parameterName>parentRecordId</parameterName>
+                <valueExpression>{!$Input:experience.Id}</valueExpression>
+            </parameters>
+            <parameters>
+                <definition>primitive://String</definition>
+                <isRequired>true</isRequired>
+                <parameterName>relatedListName</parameterName>
+                <valueExpression>Guest_Reviews__r</valueExpression>
+            </parameters>
+            <referenceName>RelatedList:experience.Guest_Reviews__r.Records</referenceName>
+        </templateDataProviders>
+        <versionIdentifier>EfQet+rMh4M/cbCsWAdqBYJYKyCLfvL0aoDxRszix2k=_1</versionIdentifier>
+    </templateVersions>
+    <type>einstein_gpt__flex</type>
+    <visibility>Global</visibility>
+</GenAiPromptTemplate>
