@@ -93,6 +93,41 @@ Complete <module name>: <what was built>
 Co-Authored-By: Claude Opus 4.6 (1M context) <noreply@anthropic.com>
 ```
 
+### 8. Full Dependency Pull
+
+Before closing out, recursively pull all supporting metadata so the module directory is self-contained and deployable to any org. Trace dependencies from:
+
+- **Flows** referenced by GenAiFunctions or bot config
+- **Custom objects/fields** referenced in those flows, Apex classes, and permission sets
+- **Custom fields on standard objects** (e.g. `MessagingSession.Email__c`, `CampaignMember.Booking__c`)
+- **Prompt templates** invoked from Apex
+
+```bash
+sf project retrieve start -m "Flow:My_Flow" -m "CustomObject:My_Object__c" -m "CustomField:StandardObj.Custom__c" -r <alias> -o <alias>
+```
+
+Note: Routing flows may contain hardcoded org-specific IDs (queues, service channels) that won't port — call this out in the commit message.
+
+### 9. Close Out — Push & PR
+
+Push the branch and create a PR to merge into `master`:
+
+```bash
+git push -u origin <alias>
+gh pr create --title "<Module/Superbadge name>" --body "## Summary
+- <what was built>
+
+## Challenges completed
+- Challenge #1: ...
+- Challenge #2: ...
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)"
+```
+
+After merge, the branch pattern stays consistent with the repo history (e.g. `spring25Admin`, `apexForAgentforceSuperbadge`).
+
+---
+
 ## Key Learnings
 
 - **`-r` flag** cannot target a path that overlaps a package directory in `sfdx-project.json`. Keep module dirs out of packageDirectories, or remove temporarily for retrieves.
