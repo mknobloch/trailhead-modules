@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <description>Calls an action to get the conversation transcript associated with the messaging session passed into the flow as part of the prompt template input. Stores the results in outputs from Get_Conversation_Transcript.</description>
+        <name>Get_Conversation_Transcript</name>
+        <label>Get Conversation Transcript</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <actionName>getConvTscpForRecord</actionName>
+        <actionType>getConvTscpForRecord</actionType>
+        <connector>
+            <targetReference>Add_Conversation_Transcript_to_Prompt_Instructions</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>recordId</name>
+            <value>
+                <elementReference>$Input.objectToSummarize.Id</elementReference>
+                <inputConfiguratorMode>Resource</inputConfiguratorMode>
+            </value>
+        </inputParameters>
+        <nameSegment>getConvTscpForRecord</nameSegment>
+        <offset>0</offset>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <apiVersion>67.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <description>Adds the conversationTranscript property of Outputs from Get_Conversation_Transcript to the prompt instructions</description>
+        <name>Add_Conversation_Transcript_to_Prompt_Instructions</name>
+        <elementSubtype>AddPromptInstructions</elementSubtype>
+        <label>Add Conversation Transcript to Prompt Instructions</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Output.Prompt</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>{!Get_Conversation_Transcript.conversationTranscript}
+</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <description>Gets the transcript for a messaging session and sends the transcript to the associated prompt template as prompt instructions.</description>
+    <environments>Default</environments>
+    <interviewLabel>Send Esso Messaging Session Transcript {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Send Esso Messaging Session Transcript</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>PromptFlow</processType>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <capabilityTypes>
+            <name>PromptTemplateType://einstein_gpt__recordSummary</name>
+            <capabilityName>PromptTemplateType://einstein_gpt__recordSummary</capabilityName>
+            <inputs>
+                <name>objectToSummarize</name>
+                <capabilityInputName>objectToSummarize</capabilityInputName>
+                <dataType>SOBJECT://MessagingSession</dataType>
+                <isCollection>false</isCollection>
+            </inputs>
+        </capabilityTypes>
+        <connector>
+            <targetReference>Get_Conversation_Transcript</targetReference>
+        </connector>
+        <triggerType>Capability</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

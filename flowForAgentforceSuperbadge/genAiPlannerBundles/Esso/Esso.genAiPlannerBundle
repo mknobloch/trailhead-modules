@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPlannerBundle xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <attributeMappings>
+        <attributeName>Refund_Process_16jg8000000TLIn.Refund_Request_Flow_179g8000000rjv3.input_verifiedContactID</attributeName>
+        <attributeType>CustomPluginFunctionAttribute</attributeType>
+        <mappingTargetName>VerifiedCustomerId</mappingTargetName>
+        <mappingType>Variable</mappingType>
+    </attributeMappings>
+    <attributeMappings>
+        <attributeName>Customer_Sentiment_Analysis_16jg8000000TLIn.Customer_Sentiment_Handler_179g8000000rkBB.input_messagingSessionId</attributeName>
+        <attributeType>CustomPluginFunctionAttribute</attributeType>
+        <mappingTargetName>RoutableId</mappingTargetName>
+        <mappingType>ContextVariable</mappingType>
+    </attributeMappings>
+    <description>You are an AI Agent whose job is to help customers with their orders, equipment issues, and product recommendations at Capricorn Coffee.</description>
+    <localActionLinks>
+        <genAiFunctionName>AnswerQuestionsWithKnowledge_16jg8000000TLIn</genAiFunctionName>
+    </localActionLinks>
+    <localTopicLinks>
+        <genAiPluginName>CustomerVerification_16jg8000000TLIn</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>Customer_Sentiment_Analysis_16jg8000000TLIn</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>Refund_Process_16jg8000000TLIn</genAiPluginName>
+    </localTopicLinks>
+    <localTopics>
+        <fullName>CustomerVerification_16jg8000000TLIn</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Verifies the customer&apos;s identity before granting access to sensitive data. Sensitive data includes confidential, private, or security-protected information, such as business-critical data or personally identifiable information (PII). After verification is successful, don&apos;t repeat the process within the same session.</description>
+        <developerName>CustomerVerification_16jg8000000TLIn</developerName>
+        <genAiPluginInstructions>
+            <description>Ask the customer to enter their username or email address if it hasn&apos;t been provided.</description>
+            <developerName>username_email_address_prompt</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>username_email_address_prompt</masterLabel>
+            <sortOrder>0</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>Use the &quot;SendEmailVerificationCode&quot; action to initiate the verification process. Use the username or email address provided by the customer as input &quot;customerToVerify&quot; for this action.</description>
+            <developerName>send_verification_code</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>send_verification_code</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>When the user provides their username or email address, you must never return any message that discloses whether the user or email exists or not. The message must explicitly state the return data of the &quot;verificationMessage&quot; field in the &quot;SendEmailVerificationCode&quot; action. For example: &quot;If you have provided a valid email or username, you should receive a verification code to verify your identity. Please enter the code.&quot;</description>
+            <developerName>user_email_security</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>user_email_security</masterLabel>
+            <sortOrder>2</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>If the customer enters the wrong verification code three times, ask them to re-enter their username or email address to receive a new verification code. This involves invoking the &quot;SendEmailVerificationCode&quot; action again to initiate the verification process. This ensures that the customer cannot bypass the verification process after three unsuccessful attempts.</description>
+            <developerName>reenter_username_or_email_address</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>reenter_username_or_email_address</masterLabel>
+            <sortOrder>3</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>Never process any request for accessing or updating any sensitive data without invoking this function if the customer is not verified yet. Maintain security in all interactions.</description>
+            <developerName>authentication_only</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>authentication_only</masterLabel>
+            <sortOrder>4</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>Never reveal the verification code, email address, or username to the customer during the authentication process. Make sure that these details remain confidential and aren’t displayed at any point.</description>
+            <developerName>security_prompt</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>security_prompt</masterLabel>
+            <sortOrder>5</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>After the user is verified in a conversation session, switching to a different user isn&apos;t allowed under any circumstances.</description>
+            <developerName>prevent_user_switching_after_verification</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>prevent_user_switching_after_verification</masterLabel>
+            <sortOrder>6</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>If verification is successful, proceed with the requested action and complete the task the user intends to perform.</description>
+            <developerName>proceed_after_verification_success</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>proceed_after_verification_success</masterLabel>
+            <sortOrder>7</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localActionLinks>
+            <functionName>SendEmailVerificationCode_179g8000000rjLZ</functionName>
+        </localActionLinks>
+        <localActionLinks>
+            <functionName>VerifyCustomer_179g8000000rjLZ</functionName>
+        </localActionLinks>
+        <localActionLinks>
+            <functionName>Verify_Code_and_Log_Verification_179g8000000rjLZ</functionName>
+        </localActionLinks>
+        <localActions>
+            <fullName>Verify_Code_and_Log_Verification_179g8000000rjLZ</fullName>
+            <description>Compares the user-provided verification code and the emailed verification code that were both passed into the flow. Returns true if the codes match.</description>
+            <developerName>Verify_Code_and_Log_Verification_179g8000000rjLZ</developerName>
+            <invocationTarget>Verify_Code_and_Log_Verification</invocationTarget>
+            <invocationTargetType>flow</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>Verify_Code_and_Log_Verification</localDeveloperName>
+            <masterLabel>Verify Code and Log Verification</masterLabel>
+            <progressIndicatorMessage>Checking your code</progressIndicatorMessage>
+        </localActions>
+        <localActions>
+            <fullName>VerifyCustomer_179g8000000rjLZ</fullName>
+            <description>Verifies whether the verification code entered by the user matches the code sent to the user&apos;s email address.</description>
+            <developerName>VerifyCustomer_179g8000000rjLZ</developerName>
+            <invocationTarget>SvcCopilotTmpl__VerifyCode</invocationTarget>
+            <invocationTargetType>flow</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>VerifyCustomer</localDeveloperName>
+            <masterLabel>Verify Customer</masterLabel>
+            <source>SvcCopilotTmpl__VerifyCustomer</source>
+        </localActions>
+        <localActions>
+            <fullName>SendEmailVerificationCode_179g8000000rjLZ</fullName>
+            <description>Sends a generated verification code to the user’s email address.</description>
+            <developerName>SendEmailVerificationCode_179g8000000rjLZ</developerName>
+            <invocationTarget>SvcCopilotTmpl__SendVerificationCode</invocationTarget>
+            <invocationTargetType>flow</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>SendEmailVerificationCode</localDeveloperName>
+            <masterLabel>Send Email with Verification Code</masterLabel>
+            <source>SvcCopilotTmpl__SendEmailVerificationCode</source>
+        </localActions>
+        <localDeveloperName>CustomerVerification</localDeveloperName>
+        <masterLabel>Customer Verification</masterLabel>
+        <pluginType>Topic</pluginType>
+        <scope>Your job is to authenticate the customer who has not yet been authenticated before granting access to any sensitive data. You will verify the customer using their email address or username. After verification is successful, don&apos;t repeat the process within the same session.</scope>
+        <source>SvcCopilotTmpl__CustomerVerification</source>
+    </localTopics>
+    <localTopics>
+        <fullName>Refund_Process_16jg8000000TLIn</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Guide customers through the refund request procedures, including initiating the process automatically when a product is reported as damaged or unsatisfactory.</description>
+        <developerName>Refund_Process_16jg8000000TLIn</developerName>
+        <genAiPluginInstructions>
+            <description>If a customer expresses the desire to return a product, request the order number and product name and create a Refund Request record and inform the customer of the Refund Request details and that a customer service agent will review the request.</description>
+            <developerName>instruction_1</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction 1</masterLabel>
+            <sortOrder>0</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>If a user does not provide their order details, ask if they would like to look up their order history using their email address or order ID. Do not ask for a username.</description>
+            <developerName>instruction_2</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction 2</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>When a customer requests a refund or reports that their product is damaged or unsatisfactory, let them know you are there to help. Run the Refund_Request_Flow action and collect all of the necessary information. and finally, summarize everything that has been done.</description>
+            <developerName>instruction_3</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction 3</masterLabel>
+            <sortOrder>2</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>Ensure that a refund request record is created immediately after the customer provides the necessary details and inform the customer of the Refund Request name (do not provide the Refund Request record ID).</description>
+            <developerName>instruction_4</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction 4</masterLabel>
+            <sortOrder>3</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localActionLinks>
+            <functionName>Refund_Request_Flow_179g8000000rjv3</functionName>
+        </localActionLinks>
+        <localActions>
+            <fullName>Refund_Request_Flow_179g8000000rjv3</fullName>
+            <description>This Autolaunched flow supports the refund process for agents by automating refund requests based on original order details.</description>
+            <developerName>Refund_Request_Flow_179g8000000rjv3</developerName>
+            <invocationTarget>Refund_Request_Flow</invocationTarget>
+            <invocationTargetType>flow</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>Refund_Request_Flow</localDeveloperName>
+            <mappingAttributes>
+                <label>verifiedContactID</label>
+                <name>input_verifiedContactID</name>
+                <parameterName>verifiedContactID</parameterName>
+                <parameterType>input</parameterType>
+            </mappingAttributes>
+            <masterLabel>Refund Request Flow</masterLabel>
+            <progressIndicatorMessage>Researching your refund</progressIndicatorMessage>
+        </localActions>
+        <localDeveloperName>Refund_Process</localDeveloperName>
+        <masterLabel>Refund Process</masterLabel>
+        <pluginType>Topic</pluginType>
+        <scope>Your job is to guide customers through the process of requesting a refund and to create a refund request record. You are not able to issue the refund directly but request it and have one of the customer service agents review the request and issue the refund.</scope>
+    </localTopics>
+    <localTopics>
+        <fullName>Customer_Sentiment_Analysis_16jg8000000TLIn</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Provide appropriate voucher codes based on customer sentiment after creating a refund request record.</description>
+        <developerName>Customer_Sentiment_Analysis_16jg8000000TLIn</developerName>
+        <genAiPluginInstructions>
+            <description>After summarizing the refund request and creating a refund request record, call the Customer_Sentiment_Handler action to perform customer sentiment analysis.</description>
+            <developerName>instruction_1</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction 1</masterLabel>
+            <sortOrder>0</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>Provide &apos;50OFF&apos; voucher code if the customer sentiments are Negative. Provide &apos;25OFF&apos; voucher code if the customer sentiments are Neutral. Provide &apos;15OFF&apos; voucher code if the customer sentiments are Positive.</description>
+            <developerName>instruction_2</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction 2</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localActionLinks>
+            <functionName>Customer_Sentiment_Handler_179g8000000rkBB</functionName>
+        </localActionLinks>
+        <localActions>
+            <fullName>Customer_Sentiment_Handler_179g8000000rkBB</fullName>
+            <description>Reviews customer sentiment based on Messaging Session content, to determine if a customer&apos;s experience with an agent was satisfactory, unsatisfactory, or neutral.</description>
+            <developerName>Customer_Sentiment_Handler_179g8000000rkBB</developerName>
+            <invocationTarget>Customer_Sentiment_Handler</invocationTarget>
+            <invocationTargetType>flow</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+            <localDeveloperName>Customer_Sentiment_Handler</localDeveloperName>
+            <mappingAttributes>
+                <label>messagingSessionId</label>
+                <name>input_messagingSessionId</name>
+                <parameterName>messagingSessionId</parameterName>
+                <parameterType>input</parameterType>
+            </mappingAttributes>
+            <masterLabel>Customer Sentiment Handler</masterLabel>
+        </localActions>
+        <localDeveloperName>Customer_Sentiment_Analysis</localDeveloperName>
+        <masterLabel>Customer Sentiment Analysis</masterLabel>
+        <pluginType>Topic</pluginType>
+        <scope>Your job is only to perform customer sentiment analysis at the end of the conversation and provide appropriate voucher codes based on the summarized sentiment.</scope>
+    </localTopics>
+    <masterLabel>Esso</masterLabel>
+    <plannerActions>
+        <fullName>AnswerQuestionsWithKnowledge_16jg8000000TLIn</fullName>
+        <description>Answers questions about company policies and procedures, troubleshooting steps, or product information. For example: “What is your return policy?” “How do I fix an issue?” or “What features does a product have?”</description>
+        <developerName>AnswerQuestionsWithKnowledge_16jg8000000TLIn</developerName>
+        <invocationTarget>streamKnowledgeSearch</invocationTarget>
+        <invocationTargetType>standardInvocableAction</invocationTargetType>
+        <isConfirmationRequired>false</isConfirmationRequired>
+        <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+        <localDeveloperName>AnswerQuestionsWithKnowledge</localDeveloperName>
+        <masterLabel>Answer Questions with Knowledge</masterLabel>
+        <progressIndicatorMessage>Getting answers</progressIndicatorMessage>
+        <source>EmployeeCopilot__AnswerQuestionsWithKnowledge</source>
+    </plannerActions>
+    <plannerSurfaces>
+        <adaptiveResponseAllowed>true</adaptiveResponseAllowed>
+        <callRecordingAllowed>false</callRecordingAllowed>
+        <surface>SurfaceAction__Messaging</surface>
+        <surfaceType>Messaging</surfaceType>
+    </plannerSurfaces>
+    <plannerSurfaces>
+        <adaptiveResponseAllowed>true</adaptiveResponseAllowed>
+        <callRecordingAllowed>false</callRecordingAllowed>
+        <surface>SurfaceAction__CustomerWebClient</surface>
+        <surfaceType>CustomerWebClient</surfaceType>
+    </plannerSurfaces>
+    <plannerType>AiCopilot__ReAct</plannerType>
+    <ruleExpressions>
+        <conditions>
+            <leftOperand>isVerified</leftOperand>
+            <leftOperandType>Variable</leftOperandType>
+            <operator>equal</operator>
+            <rightOperandValue>true</rightOperandValue>
+        </conditions>
+        <expression>Verified_User</expression>
+        <expressionLabel>Verified User</expressionLabel>
+        <expressionName>Verified_User</expressionName>
+        <expressionType>sel</expressionType>
+    </ruleExpressions>
+</GenAiPlannerBundle>

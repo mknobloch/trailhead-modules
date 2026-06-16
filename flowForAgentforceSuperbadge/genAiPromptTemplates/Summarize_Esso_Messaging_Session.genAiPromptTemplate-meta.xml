@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPromptTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <activeVersionIdentifier>CBqKktNzW9PLXfBDmWwrcAZVKkNG7Bk4fFgrigkqdkE=_1</activeVersionIdentifier>
+    <description>Analyzes a messaging session between a customer and an agent to determine if the customer&apos;s experience was positive, negative, or neutral.</description>
+    <developerName>Summarize_Esso_Messaging_Session</developerName>
+    <masterLabel>Summarize Esso Messaging Session</masterLabel>
+    <overridable>false</overridable>
+    <relatedEntity>MessagingSession</relatedEntity>
+    <templateVersions>
+        <content>You are an analyst, your job is to summarize customer sentiments from transcripts coming from {!$RecordSnapshot:MessagingSession.snapshot} after the conversation ends.
+When I ask you to summarize data from a given transcript, you must strictly follow my instructions below.
+Instructions:
+&quot;&quot;
+Customer Sentiment: Generate the sentiment of the customer from the conversation: {!$Flow:Send_Esso_Messaging_Session_Transcript.Prompt}. It can be either: Positive, Negative or Neutral.
+Don&apos;t say sentences like &apos;The customer sentiment from the conversation is&apos;
+&quot;&quot;
+</content>
+        <fileDroppingStrategy>{&quot;dropFilesBy&quot;:&quot;LAST_MODIFIED_DATE&quot;,&quot;dropFileStartingWith&quot;:&quot;OLDEST&quot;}</fileDroppingStrategy>
+        <inputs>
+            <apiName>objectToSummarize</apiName>
+            <definition>SOBJECT://MessagingSession</definition>
+            <referenceName>Input:MessagingSession</referenceName>
+            <required>true</required>
+        </inputs>
+        <isCitationEnabled>false</isCitationEnabled>
+        <primaryModel>sfdc_ai__DefaultGPT5Mini</primaryModel>
+        <status>Published</status>
+        <templateDataProviders>
+            <definition>invocable://getDataForGrounding</definition>
+            <description>Retrieves record data for grounding a prompt template.</description>
+            <label>Record Snapshot</label>
+            <parameters>
+                <definition>primitive://String</definition>
+                <isRequired>true</isRequired>
+                <parameterName>recordId</parameterName>
+                <valueExpression>{!$Input:MessagingSession.Id}</valueExpression>
+            </parameters>
+            <referenceName>RecordSnapshot:MessagingSession</referenceName>
+        </templateDataProviders>
+        <templateDataProviders>
+            <definition>flow://Send_Esso_Messaging_Session_Transcript</definition>
+            <description>Gets the transcript for a messaging session and sends the transcript to the associated prompt template as prompt instructions.</description>
+            <label>Send Esso Messaging Session Transcript</label>
+            <parameters>
+                <definition>SOBJECT://MessagingSession</definition>
+                <isRequired>true</isRequired>
+                <parameterName>objectToSummarize</parameterName>
+                <valueExpression>{!$Input:MessagingSession}</valueExpression>
+            </parameters>
+            <referenceName>Flow:Send_Esso_Messaging_Session_Transcript</referenceName>
+        </templateDataProviders>
+        <versionIdentifier>CBqKktNzW9PLXfBDmWwrcAZVKkNG7Bk4fFgrigkqdkE=_1</versionIdentifier>
+    </templateVersions>
+    <type>einstein_gpt__recordSummary</type>
+    <visibility>Global</visibility>
+</GenAiPromptTemplate>

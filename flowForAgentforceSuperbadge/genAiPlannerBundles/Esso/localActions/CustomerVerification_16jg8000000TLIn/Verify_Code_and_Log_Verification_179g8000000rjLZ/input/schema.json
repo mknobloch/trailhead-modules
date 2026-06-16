@@ -1,0 +1,35 @@
+{
+  "required" : [ "authenticationKey", "customerCode", "customerId", "customerType" ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "authenticationKey" : {
+      "title" : "authenticationKey",
+      "description" : "Stores the authentication key that’s used to generate the verification code.",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "customerCode" : {
+      "title" : "customerCode",
+      "description" : "Stores the user-provided verification code that's passed into the flow.",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "customerId" : {
+      "title" : "customerId",
+      "description" : "Stores the UserId or ContactID of the User",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "customerType" : {
+      "title" : "customerType",
+      "description" : "Stores the Id type whether it is User or Contact",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}
