@@ -240,7 +240,14 @@ Pull before editing. Deploy after changes. Never hand-edit in Setup between pull
 
 **Critical gotcha:** `caseId` is a reserved planner variable name. Do not use it as a custom variable — it will silently conflict with the platform's internal case routing.
 
-### 6.3 Debugging Agent "I Can't Help With That"
+### 6.3 Linking Topics to Planners
+The metadata API has no element to associate a GenAiPlugin (topic) with a planner. Instead, insert a record on the `GenAiPlannerFunctionDef` setup object:
+```bash
+sf data create record -s GenAiPlannerFunctionDef -v "PlannerId=<ID> Plugin=<ID>" -o [alias]
+```
+Query `GenAiPlannerDefinition` and `GenAiPluginDefinition` to get the IDs.
+
+### 6.5 Debugging Agent "I Can't Help With That"
 This is the generic fallback for any unhandled error. Debug path:
 1. Query `GenAiInteractionLog` or `SetupAuditTrail` for the session
 2. Check if the action (Apex/Flow) threw an unhandled exception
@@ -250,13 +257,13 @@ This is the generic fallback for any unhandled error. Debug path:
 
 You can query the agent session information to help identify the failure point.
 
-### 6.4 Multi-Surface Agent Architecture
+### 6.6 Multi-Surface Agent Architecture
 - **Chat/Messaging**: Uses ContextResolver + Planner. Full conversational flow with intent matching
 - **Email**: Can bypass the planner via Record-Triggered Flow on EmailMessage. More deterministic, avoids planner failure modes
 
 Design your agent to use the right surface for the right interaction type. Don't force everything through the planner.
 
-### 6.5 Prompt Builder / Prompt Templates
+### 6.7 Prompt Builder / Prompt Templates
 
 **Version Identifiers:** The `<versionIdentifier>` in prompt template metadata must use the server's hash-suffix format, not arbitrary strings. Pull the template after UI creation to get the correct format.
 
