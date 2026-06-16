@@ -1,0 +1,35 @@
+{
+  "required" : [ "orderNumber", "productName", "refundReason", "verifiedContactID" ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "orderNumber" : {
+      "title" : "orderNumber",
+      "description" : "The order number of the customer's specified order",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : true
+    },
+    "productName" : {
+      "title" : "productName",
+      "description" : "The name of the product specified in the customer's order",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : true
+    },
+    "refundReason" : {
+      "title" : "refundReason",
+      "description" : "This the provided reason for the refund and is added to the comments field of the refund request.",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : true
+    },
+    "verifiedContactID" : {
+      "title" : "verifiedContactID",
+      "description" : "Receives the ID of the contact we have verified who is interacting with the Agent",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}
