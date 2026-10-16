@@ -1,0 +1,5 @@
+{
+  "title" : "EquipmentRecommendation",
+  "description" : "Equipment recommendation containing recommendation and rationale",
+  "lightning:type" : "@apexClassType/c__EquipmentRecommendationDTO"
+}

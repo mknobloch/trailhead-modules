@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPromptTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <activeVersionIdentifier>Qjzlp9ziQnVgWUGhY1LywREsJ7O/j4cw7kPpMYrr0r0=_12</activeVersionIdentifier>
+    <description>Recommends whether a store&apos;s equipment should be repaired or replaced, based on the asset&apos;s recent Equipment Malfunction case history and the store&apos;s traffic and peak-demand conditions. Returns a Repair/Replace recommendation with a short rationale.</description>
+    <developerName>Equipment_Repair_or_Replace_Recommendation</developerName>
+    <masterLabel>Equipment Repair or Replace Recommendation</masterLabel>
+    <overridable>false</overridable>
+    <templateVersions>
+        <content>You are an equipment-management advisor for a retail coffee chain. Recommend whether a specific piece of store equipment should be REPAIRED or REPLACED, based on its malfunction history and the operating conditions of the store.
+
+Store: {!$RecordSnapshot:Store.snapshot}
+Equipment: {!$RecordSnapshot:Asset.snapshot}
+
+Recent malfunction history for this equipment product at this store {!$Flow:Gather_5_Most_Recent_Cases.Prompt}
+
+Decide using these guidelines:
+- Recurring or frequent malfunctions (several recent cases, especially repeats in a short period) favor REPLACE. An isolated incident favors REPAIR.
+- High traffic and failures during peak demand times favor REPLACE, since downtime directly disrupts customer service. Lower-traffic stores can often absorb a repair.
+- If past repairs clearly did not resolve the issue (it keeps recurring), favor REPLACE.
+- When the evidence is mixed or thin, prefer the more conservative REPAIR.
+- If no prior related cases are found, use your industry knowledge to evaluate. 
+
+Respond in JSON format for these two values only
+RECOMMENDATION: &lt;Repair or Replace&gt;
+RATIONALE: &lt;one or two sentences citing the case history and store conditions&gt;
+
+
+</content>
+        <fileDroppingStrategy>{&quot;dropFilesBy&quot;:&quot;LAST_MODIFIED_DATE&quot;,&quot;dropFileStartingWith&quot;:&quot;OLDEST&quot;}</fileDroppingStrategy>
+        <inputs>
+            <apiName>Store</apiName>
+            <definition>SOBJECT://Account</definition>
+            <masterLabel>Store</masterLabel>
+            <referenceName>Input:Store</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>Asset</apiName>
+            <definition>SOBJECT://Asset</definition>
+            <masterLabel>Asset</masterLabel>
+            <referenceName>Input:Asset</referenceName>
+            <required>true</required>
+        </inputs>
+        <isCitationEnabled>false</isCitationEnabled>
+        <outputSchema>EquipmentRecommendation</outputSchema>
+        <primaryModel>sfdc_ai__DefaultGPT5Mini</primaryModel>
+        <responseFormat>JSON</responseFormat>
+        <status>Published</status>
+        <templateDataProviders>
+            <definition>flow://Gather_5_Most_Recent_Cases</definition>
+            <description>Used to collect the most recent equipment malfunction cases associated with an account</description>
+            <label>Gather 5 Most Recent Cases</label>
+            <referenceName>Flow:Gather_5_Most_Recent_Cases</referenceName>
+        </templateDataProviders>
+        <templateDataProviders>
+            <definition>invocable://getDataForGrounding</definition>
+            <description>Retrieves record data for grounding a prompt template.</description>
+            <label>Record Snapshot</label>
+            <parameters>
+                <definition>primitive://String</definition>
+                <isRequired>true</isRequired>
+                <parameterName>recordId</parameterName>
+                <valueExpression>{!$Input:Store.Id}</valueExpression>
+            </parameters>
+            <referenceName>RecordSnapshot:Store</referenceName>
+        </templateDataProviders>
+        <templateDataProviders>
+            <definition>invocable://getDataForGrounding</definition>
+            <description>Retrieves record data for grounding a prompt template.</description>
+            <label>Record Snapshot</label>
+            <parameters>
+                <definition>primitive://String</definition>
+                <isRequired>true</isRequired>
+                <parameterName>recordId</parameterName>
+                <valueExpression>{!$Input:Asset.Id}</valueExpression>
+            </parameters>
+            <referenceName>RecordSnapshot:Asset</referenceName>
+        </templateDataProviders>
+        <templateFormat>FormulaExpression</templateFormat>
+        <versionIdentifier>Qjzlp9ziQnVgWUGhY1LywREsJ7O/j4cw7kPpMYrr0r0=_10</versionIdentifier>
+    </templateVersions>
+    <templateVersions>
+        <content>You are an equipment-management advisor for a retail coffee chain. Recommend whether a specific piece of store equipment should be REPAIRED or REPLACED, based on its malfunction history and the operating conditions of the store.
+
+Store: {!$RecordSnapshot:Store.snapshot}
+Equipment: {!$RecordSnapshot:Asset.snapshot}
+
+Recent malfunction history for this equipment product at this store {!$Flow:Gather_5_Most_Recent_Cases.Prompt}
+
+Decide using these guidelines:
+- Recurring or frequent malfunctions (several recent cases, especially repeats in a short period) favor REPLACE. An isolated incident favors REPAIR.
+- High traffic and failures during peak demand times favor REPLACE, since downtime directly disrupts customer service. Lower-traffic stores can often absorb a repair.
+- If past repairs clearly did not resolve the issue (it keeps recurring), favor REPLACE.
+- When the evidence is mixed or thin, prefer the more conservative REPAIR.
+- If no prior related cases are found, use your industry knowledge to evaluate. 
+
+Respond in JSON format for these two values only
+RECOMMENDATION: &lt;Repair or Replace&gt;
+RATIONALE: &lt;one or two sentences citing the case history and store conditions&gt;
+
+
+</content>
+        <fileDroppingStrategy>{&quot;dropFilesBy&quot;:&quot;LAST_MODIFIED_DATE&quot;,&quot;dropFileStartingWith&quot;:&quot;OLDEST&quot;}</fileDroppingStrategy>
+        <inputs>
+            <apiName>Store</apiName>
+            <definition>SOBJECT://Account</definition>
+            <masterLabel>Store</masterLabel>
+            <referenceName>Input:Store</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>Asset</apiName>
+            <definition>SOBJECT://Asset</definition>
+            <masterLabel>Asset</masterLabel>
+            <referenceName>Input:Asset</referenceName>
+            <required>true</required>
+        </inputs>
+        <isCitationEnabled>false</isCitationEnabled>
+        <outputSchema>EquipmentRecommendation</outputSchema>
+        <primaryModel>sfdc_ai__DefaultGPT5Mini</primaryModel>
+        <responseFormat>JSON</responseFormat>
+        <status>Published</status>
+        <templateDataProviders>
+            <definition>flow://Gather_5_Most_Recent_Cases</definition>
+            <description>Used to collect the most recent equipment malfunction cases associated with an account</description>
+            <label>Gather 5 Most Recent Cases</label>
+            <parameters>
+                <definition>SOBJECT://Account</definition>
+                <isRequired>false</isRequired>
+                <parameterName>accountInfo</parameterName>
+                <valueExpression>{!$Input:Store}</valueExpression>
+            </parameters>
+            <parameters>
+                <definition>primitive://String</definition>
+                <isRequired>false</isRequired>
+                <parameterName>assetName</parameterName>
+                <valueExpression>{!$Input:Asset.Name}</valueExpression>
+            </parameters>
+            <referenceName>Flow:Gather_5_Most_Recent_Cases</referenceName>
+        </templateDataProviders>
+        <templateDataProviders>
+            <definition>invocable://getDataForGrounding</definition>
+            <description>Retrieves record data for grounding a prompt template.</description>
+            <label>Record Snapshot</label>
+            <parameters>
+                <definition>primitive://String</definition>
+                <isRequired>true</isRequired>
+                <parameterName>recordId</parameterName>
+                <valueExpression>{!$Input:Store.Id}</valueExpression>
+            </parameters>
+            <referenceName>RecordSnapshot:Store</referenceName>
+        </templateDataProviders>
+        <templateDataProviders>
+            <definition>invocable://getDataForGrounding</definition>
+            <description>Retrieves record data for grounding a prompt template.</description>
+            <label>Record Snapshot</label>
+            <parameters>
+                <definition>primitive://String</definition>
+                <isRequired>true</isRequired>
+                <parameterName>recordId</parameterName>
+                <valueExpression>{!$Input:Asset.Id}</valueExpression>
+            </parameters>
+            <referenceName>RecordSnapshot:Asset</referenceName>
+        </templateDataProviders>
+        <templateFormat>FormulaExpression</templateFormat>
+        <versionIdentifier>Qjzlp9ziQnVgWUGhY1LywREsJ7O/j4cw7kPpMYrr0r0=_11</versionIdentifier>
+    </templateVersions>
+    <templateVersions>
+        <content>You are an equipment-management advisor for a retail coffee chain. Recommend whether a specific piece of store equipment should be REPAIRED or REPLACED, based on its malfunction history and the operating conditions of the store.
+
+Store: {!$Input:Store.Name}
+Equipment: {!$Input:Asset.Name}{!$RecordSnapshot:Asset.snapshot}
+
+Recent malfunction history for this equipment product at this store {!$Flow:Gather_5_Most_Recent_Cases.Prompt}
+
+Decide using these guidelines:
+- Recurring or frequent malfunctions (several recent cases, especially repeats in a short period) favor REPLACE. An isolated incident favors REPAIR.
+- High traffic and failures during peak demand times favor REPLACE, since downtime directly disrupts customer service. Lower-traffic stores can often absorb a repair.
+- If past repairs clearly did not resolve the issue (it keeps recurring), favor REPLACE.
+- When the evidence is mixed or thin, prefer the more conservative REPAIR.
+- If no prior related cases are found, use your industry knowledge to evaluate. 
+
+Respond in JSON format for these two values only
+RECOMMENDATION: &lt;Repair or Replace&gt;
+RATIONALE: &lt;one or two sentences citing the case history and store conditions&gt;
+
+
+</content>
+        <fileDroppingStrategy>{&quot;dropFilesBy&quot;:&quot;LAST_MODIFIED_DATE&quot;,&quot;dropFileStartingWith&quot;:&quot;OLDEST&quot;}</fileDroppingStrategy>
+        <inputs>
+            <apiName>Asset</apiName>
+            <definition>SOBJECT://Asset</definition>
+            <masterLabel>Asset</masterLabel>
+            <referenceName>Input:Asset</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>Store</apiName>
+            <definition>SOBJECT://Account</definition>
+            <masterLabel>Store</masterLabel>
+            <referenceName>Input:Store</referenceName>
+            <required>true</required>
+        </inputs>
+        <isCitationEnabled>false</isCitationEnabled>
+        <outputSchema>EquipmentRecommendation</outputSchema>
+        <primaryModel>sfdc_ai__DefaultGPT5Mini</primaryModel>
+        <responseFormat>JSON</responseFormat>
+        <status>Published</status>
+        <templateDataProviders>
+            <definition>invocable://getDataForGrounding</definition>
+            <description>Retrieves record data for grounding a prompt template.</description>
+            <label>Record Snapshot</label>
+            <parameters>
+                <definition>primitive://String</definition>
+                <isRequired>true</isRequired>
+                <parameterName>recordId</parameterName>
+                <valueExpression>{!$Input:Asset.Id}</valueExpression>
+            </parameters>
+            <referenceName>RecordSnapshot:Asset</referenceName>
+        </templateDataProviders>
+        <templateDataProviders>
+            <definition>flow://Gather_5_Most_Recent_Cases</definition>
+            <description>Used to collect the most recent equipment malfunction cases associated with an account</description>
+            <label>Gather 5 Most Recent Cases</label>
+            <parameters>
+                <definition>SOBJECT://Account</definition>
+                <isRequired>false</isRequired>
+                <parameterName>accountInfo</parameterName>
+                <valueExpression>{!$Input:Store}</valueExpression>
+            </parameters>
+            <parameters>
+                <definition>primitive://String</definition>
+                <isRequired>false</isRequired>
+                <parameterName>assetName</parameterName>
+                <valueExpression>{!$Input:Asset.Name}</valueExpression>
+            </parameters>
+            <referenceName>Flow:Gather_5_Most_Recent_Cases</referenceName>
+        </templateDataProviders>
+        <templateFormat>FormulaExpression</templateFormat>
+        <versionIdentifier>Qjzlp9ziQnVgWUGhY1LywREsJ7O/j4cw7kPpMYrr0r0=_12</versionIdentifier>
+    </templateVersions>
+    <type>einstein_gpt__flex</type>
+    <visibility>Global</visibility>
+</GenAiPromptTemplate>
