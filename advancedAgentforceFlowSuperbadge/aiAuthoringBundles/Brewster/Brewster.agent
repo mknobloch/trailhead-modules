@@ -143,6 +143,11 @@ subagent Equipment_Case_Management:
         actions:
             Get_Store_and_Asset_Details: @actions.Get_Store_and_Asset_Details
                 with serialNumber = ...
+            Create_Case: @actions.Create_Case
+                with accountId = ...
+                with assetId = ...
+                with description = ...
+                with subject = ...
 
 
     actions:
@@ -174,5 +179,42 @@ subagent Equipment_Case_Management:
                 assetName: string
                     label: "assetName"
                     description: "Asset Name"
+                    is_displayable: True
+                    filter_from_agent: False
+        Create_Case:
+            label: "Create Case"
+            description: "Create new case"
+            target: "flow://Create_Case_Brewster"
+            inputs:
+                accountId: string
+                    label: "accountId"
+                    description: "Account Record ID"
+                    is_required: False
+                assetId: string
+                    label: "assetId"
+                    description: "Asset Record ID"
+                    is_required: False
+                description: string
+                    label: "description"
+                    description: "Case description"
+                    is_required: False
+                subject: string
+                    label: "subject"
+                    description: "Case subject"
+                    is_required: False
+            outputs:
+                caseId: string
+                    label: "caseId"
+                    description: "New case record ID"
+                    is_displayable: False
+                    filter_from_agent: False
+                rationale: string
+                    label: "rationale"
+                    description: "Rationale for the decision made of replacement vs repair"
+                    is_displayable: True
+                    filter_from_agent: False
+                recommendation: string
+                    label: "recommendation"
+                    description: "The recommendation Brewster makes based on all the information gathered"
                     is_displayable: True
                     filter_from_agent: False

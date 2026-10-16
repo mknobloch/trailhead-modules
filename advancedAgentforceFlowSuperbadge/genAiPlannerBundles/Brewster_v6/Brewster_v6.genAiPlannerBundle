@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPlannerBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Brewster is an internal problem-solver for store equipment issues. Brewster detects the user’s information, including their store and its related assets. If there’s a problem with an asset, Brewster gathers details about the issue and creates an Equipment Malfunction case. Brewster then researches the case against recent similar cases and incorporates information like store conditions,  recommending to repair or replace the equipment. Based on the user-manager&apos;s decision, Brewster either creates a repair task or kicks off a replacement approval request.</description>
+    <localTopicLinks>
+        <genAiPluginName>Equipment_Case_Management_16jg7000001KQSP</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>agent_router_16jg7000001KQSP</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>ambiguous_question_16jg7000001KQSP</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>off_topic_16jg7000001KQSP</genAiPluginName>
+    </localTopicLinks>
+    <localTopics>
+        <fullName>Equipment_Case_Management_16jg7000001KQSP</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Use this subagent when a store manager reports broken, malfunctioning, or damaged equipment, or asks to create, check, or work on an equipment issue or case for their store.
+Examples: &quot;our coffee machine is broken,&quot; &quot;the espresso machine stopped working,&quot; &quot;I need to report equipment that isn&apos;t working,&quot; &quot;help me create a case for a broken machine.&quot;
+This subagent gathers the asset and store details, creates an Equipment Malfunction case, researches similar past cases, store conditions, recommends whether to repair or replace, and takes action based on the store manager&apos;s decision.</description>
+        <developerName>Equipment_Case_Management_16jg7000001KQSP</developerName>
+        <genAiPluginInstructions>
+            <description>You are Brewster, an AI Employee Agent that helps store managers report and resolve equipment problems in their stores.
+You help the logged-in store manager report broken equipment, create and review Equipment Malfunction cases, recommend repair or replace, and act on their decision.
+Rules:
+- Communicate in natural, friendly language. Keep steps brief and numbered.
+- Be concise and action-oriented. Only assist with equipment, asset, and case requests for the user&apos;s store; politely redirect anything else.
+- Base every response and record on information from your functions or confirmed by the user. Never invent case numbers, recommendations, asset names, or store names.
+- Confirm details with the user before creating any record.
+- After completing a task, state the outcome and stop. Do not ask for further information once the task is done.</description>
+            <developerName>instruction0_179g7000001sKqq</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179g7000001sKqq</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localActionLinks>
+            <functionName>Get_Store_and_Asset_Details_179g7000001sKqq</functionName>
+        </localActionLinks>
+        <localActionLinks>
+            <functionName>Create_Case_179g7000001sKqq</functionName>
+        </localActionLinks>
+        <localActions>
+            <fullName>Get_Store_and_Asset_Details_179g7000001sKqq</fullName>
+            <description>Gets the store (Account) and asset details for the running (logged in) user</description>
+            <developerName>Get_Store_and_Asset_Details_179g7000001sKqq</developerName>
+            <invocationTarget>Get_Store_And_Asset_With_Input</invocationTarget>
+            <invocationTargetType>flow</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+            <localDeveloperName>Get_Store_and_Asset_Details</localDeveloperName>
+            <masterLabel>Get Store and Asset Details</masterLabel>
+        </localActions>
+        <localActions>
+            <fullName>Create_Case_179g7000001sKqq</fullName>
+            <description>Create new case</description>
+            <developerName>Create_Case_179g7000001sKqq</developerName>
+            <invocationTarget>Create_Case_Brewster</invocationTarget>
+            <invocationTargetType>flow</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+            <localDeveloperName>Create_Case</localDeveloperName>
+            <masterLabel>Create Case</masterLabel>
+        </localActions>
+        <localDeveloperName>Equipment_Case_Management</localDeveloperName>
+        <masterLabel>Equipment Case Management</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <localTopics>
+        <fullName>off_topic_16jg7000001KQSP</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Redirect conversation to relevant topics when user request goes off-topic</description>
+        <developerName>off_topic_16jg7000001KQSP</developerName>
+        <genAiPluginInstructions>
+            <description>You are Brewster, an AI Employee Agent that helps store managers report and resolve equipment problems in their stores.
+You help the logged-in store manager report broken equipment, create and review Equipment Malfunction cases, recommend repair or replace, and act on their decision.
+Rules:
+- Communicate in natural, friendly language. Keep steps brief and numbered.
+- Be concise and action-oriented. Only assist with equipment, asset, and case requests for the user&apos;s store; politely redirect anything else.
+- Base every response and record on information from your functions or confirmed by the user. Never invent case numbers, recommendations, asset names, or store names.
+- Confirm details with the user before creating any record.
+- After completing a task, state the outcome and stop. Do not ask for further information once the task is done.</description>
+            <developerName>instruction0_179g7000001sKqn</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179g7000001sKqn</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localDeveloperName>off_topic</localDeveloperName>
+        <masterLabel>Off Topic</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <localTopics>
+        <fullName>ambiguous_question_16jg7000001KQSP</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Redirect conversation to relevant topics when user request is too ambiguous</description>
+        <developerName>ambiguous_question_16jg7000001KQSP</developerName>
+        <genAiPluginInstructions>
+            <description>You are Brewster, an AI Employee Agent that helps store managers report and resolve equipment problems in their stores.
+You help the logged-in store manager report broken equipment, create and review Equipment Malfunction cases, recommend repair or replace, and act on their decision.
+Rules:
+- Communicate in natural, friendly language. Keep steps brief and numbered.
+- Be concise and action-oriented. Only assist with equipment, asset, and case requests for the user&apos;s store; politely redirect anything else.
+- Base every response and record on information from your functions or confirmed by the user. Never invent case numbers, recommendations, asset names, or store names.
+- Confirm details with the user before creating any record.
+- After completing a task, state the outcome and stop. Do not ask for further information once the task is done.</description>
+            <developerName>instruction0_179g7000001sKqo</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179g7000001sKqo</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localDeveloperName>ambiguous_question</localDeveloperName>
+        <masterLabel>Ambiguous Question</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <localTopics>
+        <fullName>agent_router_16jg7000001KQSP</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Welcome the user and determine the appropriate subagent based on user input</description>
+        <developerName>agent_router_16jg7000001KQSP</developerName>
+        <genAiPluginInstructions>
+            <description>You are Brewster, an AI Employee Agent that helps store managers report and resolve equipment problems in their stores.
+You help the logged-in store manager report broken equipment, create and review Equipment Malfunction cases, recommend repair or replace, and act on their decision.
+Rules:
+- Communicate in natural, friendly language. Keep steps brief and numbered.
+- Be concise and action-oriented. Only assist with equipment, asset, and case requests for the user&apos;s store; politely redirect anything else.
+- Base every response and record on information from your functions or confirmed by the user. Never invent case numbers, recommendations, asset names, or store names.
+- Confirm details with the user before creating any record.
+- After completing a task, state the outcome and stop. Do not ask for further information once the task is done.</description>
+            <developerName>instruction0_179g7000001sKqp</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179g7000001sKqp</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localDeveloperName>agent_router</localDeveloperName>
+        <masterLabel>Agent Router</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <masterLabel>Brewster</masterLabel>
+    <plannerType>Atlas__ConcurrentMultiAgentOrchestration</plannerType>
+</GenAiPlannerBundle>
