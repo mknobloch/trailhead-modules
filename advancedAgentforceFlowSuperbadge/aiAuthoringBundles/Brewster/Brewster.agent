@@ -148,6 +148,11 @@ subagent Equipment_Case_Management:
                 with assetId = ...
                 with description = ...
                 with subject = ...
+            Approval_flow_for_Regional_Manager: @actions.Approval_flow_for_Regional_Manager
+                with firstApprover = ...
+                with recordId = ...
+                with submissionComments = ...
+                with submitter = ...
 
 
     actions:
@@ -217,4 +222,31 @@ subagent Equipment_Case_Management:
                     label: "recommendation"
                     description: "The recommendation Brewster makes based on all the information gathered"
                     is_displayable: True
+                    filter_from_agent: False
+        Approval_flow_for_Regional_Manager:
+            label: "Approval flow for Regional Manager"
+            description: "Submitting Approval Request to Regional Manager"
+            target: "flow://Approval_flow_for_Regional_Manager"
+            inputs:
+                firstApprover: string
+                    label: "firstApprover"
+                    description: "This is the default first approver"
+                    is_required: False
+                recordId: string
+                    label: "recordId"
+                    description: "This is the record the approval is related to"
+                    is_required: True
+                submissionComments: string
+                    label: "submissionComments"
+                    description: "Submitter comments from the store manager based on the recommendation from the agent"
+                    is_required: True
+                submitter: string
+                    label: "submitter"
+                    description: "The user requesting the approval"
+                    is_required: False
+            outputs:
+                textSummary: string
+                    label: "textSummary"
+                    description: "Passing the summary text for the replacement request from store manager for approval by the regional manager"
+                    is_displayable: False
                     filter_from_agent: False

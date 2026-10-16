@@ -1,0 +1,35 @@
+{
+  "required" : [ "recordId", "submissionComments" ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "firstApprover" : {
+      "title" : "firstApprover",
+      "description" : "This is the default first approver",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "recordId" : {
+      "title" : "recordId",
+      "description" : "This is the record the approval is related to",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "submissionComments" : {
+      "title" : "submissionComments",
+      "description" : "Submitter comments from the store manager based on the recommendation from the agent",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "submitter" : {
+      "title" : "submitter",
+      "description" : "The user requesting the approval",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}
